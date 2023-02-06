@@ -22,3 +22,7 @@ jobs:
         run: npm ci
       - name: Build VueTorrent
         run: npm run build
+      - name: Archive Build Artifacts
+        uses: kittaakos/upload-artifact-as-is@v0
+        with:
+          path: ./vuetorrent/

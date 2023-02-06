@@ -106,6 +106,13 @@ export default defineConfig(({ command, mode }) => {
         registerType: 'autoUpdate',
         base: './',
         useCredentials: true,
+        share_target: {
+          action: "/",
+          params: {
+            text: "download",
+            url: "link"
+          }
+        },
         workbox: {
           skipWaiting: true,
           globPatterns: ['**/*.{js,css,html,ico,png,svg}']

@@ -108,9 +108,20 @@ export default defineConfig(({ command, mode }) => {
         useCredentials: true,
         share_target: {
           action: "/",
+          method: "GET",
           params: {
             text: "download",
-            url: "link"
+            url: "url",
+            files: [
+              {
+                name: "records",
+                accept: ["text/csv", ".csv"]
+              },
+              {
+                name: "graphs",
+                accept: "image/svg+xml"
+              }
+            ]
           }
         },
         workbox: {

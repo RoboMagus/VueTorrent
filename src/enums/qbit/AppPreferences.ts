@@ -4,6 +4,12 @@ export enum BitTorrentProtocol {
   uTP
 }
 
+export enum ContentLayout {
+  ORIGINAL = "Original",
+  SUBFOLDER = "Subfolder",
+  NO_SUBFOLDER = "NoSubfolder"
+}
+
 export enum DynDnsService {
   USE_DYNDNS,
   USE_NOIP
@@ -16,10 +22,10 @@ export enum Encryption {
 }
 
 export enum MaxRatioAction {
-  PAUSE_TORRENT,
-  REMOVE_TORRENT,
-  REMOVE_TORRENT_AND_FILES,
-  ENABLE_SUPERSEEDING
+  PAUSE_TORRENT = 0,
+  REMOVE_TORRENT = 1,
+  REMOVE_TORRENT_AND_FILES = 3,
+  ENABLE_SUPERSEEDING = 2
 }
 
 export enum ProxyType {
@@ -48,6 +54,12 @@ export enum SchedulerDays {
   EVERY_FRIDAY,
   EVERY_SATURDAY,
   EVERY_SUNDAY
+}
+
+export enum StopCondition {
+  NONE = "None",
+  METADATA_RECEIVED = "MetadataReceived",
+  FILES_CHECKED = "FilesChecked"
 }
 
 export enum UploadChokingAlgorithm {

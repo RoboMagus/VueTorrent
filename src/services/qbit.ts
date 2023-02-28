@@ -92,7 +92,6 @@ export class QBitApi {
     const params: Parameters = {
       sort: !payload.isCustomSortEnabled ? payload.sort : null,
       reverse: !payload.isCustomSortEnabled ? payload.reverse : null,
-      hashes: payload.hashes.length > 0 ? payload.hashes.join('|') : null,
       filter: payload.filter ? payload.filter : null,
       category: payload.category !== null ? payload.category : null,
       tag: payload.tag !== null ? payload.tag : null
@@ -118,6 +117,7 @@ export class QBitApi {
     return this.axios.get('/sync/torrentPeers', {
       params: { hash, rid }
     })
+      .then(r => r.data)
   }
 
   async setTorrentName(hash: string, name: string): Promise<void> {
@@ -141,7 +141,7 @@ export class QBitApi {
   }
 
   async getAvailableTags(): Promise<string[]> {
-    return this.axios.get('/torrents/tags').then(res => res.data)
+    return this.axios.get('/torrents/tags').then(res => res.data.sort((a: string, b: string) => a.localeCompare(b.toLowerCase(), undefined, {sensitivity: 'base'})))
   }
 
   async getTorrentProperties(hash: string): Promise<TorrentProperties> {
@@ -199,6 +199,13 @@ export class QBitApi {
   async deleteFeed(name: string): Promise<void> {
     await this.execute('rss/removeItem', {
       path: name
+    })
+  }
+
+  async markAsRead(itemPath: string, articleId: string) {
+    await this.execute('rss/markAsRead', {
+      itemPath,
+      articleId
     })
   }
 
@@ -332,7 +339,12 @@ export class QBitApi {
   }
 
   async addTorrentTrackers(hash: string, trackers: string): Promise<void> {
-    await this.torrentAction('addTrackers', [hash], { urls: trackers })
+    const params = {
+      hash,
+      urls: trackers
+    }
+
+    await this.execute(`/torrents/addTrackers`, params)
   }
 
   async removeTorrentTrackers(hash: string, trackers: string[]): Promise<void> {

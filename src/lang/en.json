@@ -24,8 +24,9 @@
   "inactive": "Inactive",
   "stalled": "Stalled",
   "errored": "Errored",
-  "login": "Login in",
+  "login": "Log in",
   "logout": "Log out",
+  "shutdownApp": "Shutdown Application",
   "download": "Download",
   "downloaded": "Downloaded",
   "upload": "Upload",
@@ -46,6 +47,10 @@
   "rule": "Rule",
   "then": "Then",
   "of": "of",
+  "yes": "yes",
+  "no": "no",
+  "filter": "Filter",
+  "close": "Close",
   "dashboard": {
     "tooltips": {
       "toggleSearch": "Toggle Search Filter",
@@ -87,8 +92,7 @@
       "removeSelected": "Remove selected torrents",
       "openSettings": "Open settings",
       "searchNew": "Search new torrent",
-      "rssArticles":  "View RSS feed articles",
-      "shutdownApp": "Shutdown Application"
+      "rssArticles":  "View RSS feed articles"
     },
     "sessionStats": {
       "tooltip": "Since the last time qBittorrent was restarted"
@@ -141,6 +145,7 @@
     },
     "rss": {
       "title": "RSS Articles",
+      "filterRead": "Unread articles only",
       "columnTitle": {
         "feedName": "Feed Name",
         "author": "Author",
@@ -186,6 +191,8 @@
           "openSideBarOnStart": "Open Side Bar on launch",
           "currentVersion": "Current Version:",
           "qbittorrentVersion": "QBittorrent Version:",
+          "importSettings": "Import Settings",
+          "exportSettings": "Export Settings",
           "resetSettings": "Reset Settings"
         },
         "pageDashboard": {
@@ -193,6 +200,7 @@
           "completedTorrentTip": "Properties to display for completed torrents",
           "properties": {
             "availability": "Availability",
+            "tracker": "Tracker",
             "category": "Category",
             "tags": "Tags",
             "completed": "Completed",
@@ -223,8 +231,10 @@
       "pageDownloads": {
         "subHeaderWhenAddTorrent": "When adding a torrent",
         "whenAddTorrent": {
-          "createSubFolder": "Create subfolder for torrents with multiple files",
-          "donotAutoStart": "Do not start the download automatically"
+          "contentLayout": "Torrent content layout",
+          "donotAutoStart": "Do not start the download automatically",
+          "stopCondition": "Torrent stop condition",
+          "autoDeleteMode": "Delete .torrent files afterwards"
         },
         "subHeaderPublicSettings": "Public Settings",
         "publicSettings": {
@@ -421,10 +431,21 @@
       "downloadDirectory": "Download Directory",
       "starttorrent": "Start torrent",
       "skipHashCheck": "Skip hash check",
-      "createSubfolder": "Create subfolder",
       "automaticTorrentManagement": "Automatic Torrent Management",
       "dropHereForAdd": "Drop here for add",
-      "oneOrMoreFilesInvalidTorrent": "One or more files are not valid torrents"
+      "oneOrMoreFilesInvalidTorrent": "One or more files are not valid torrents",
+      "contentLayout": "Content Layout",
+      "contentLayoutOptions": {
+        "original": "Original",
+        "subfolder": "Create Subfolder",
+        "nosubfolder": "Remove Subfolder"
+      },
+      "stopCondition": "Stop Condition",
+      "stopConditionOptions": {
+        "none": "None",
+        "metadataReceived": "Metadata Received",
+        "filesChecked": "Files Checked"
+      }
     },
     "changeLocation": {
       "title": "Change Location"
@@ -467,6 +488,10 @@
     },
     "delete": {
       "check": "Also delete files from storage"
+    },
+    "shutdown": {
+      "title": "Shutdown qBittorrent",
+      "content": "Do you really want to shutdown qBittorrent?"
     }
   },
   "toast": {
@@ -479,11 +504,12 @@
     "renameFileFailed": "Unable to rename file",
     "renameFolderFailed": "Unable to rename file",
     "copySuccess": "Text copied!",
-    "copyNotSupported": "Unable to copy, clipboard API unavailable on this browser",
+    "copyNotSupported": "Unable to copy, context isn't secured",
     "pasteSuccess": "Text pasted!",
-    "pasteNotSupported": "Unable to paste, clipboard API unavailable on this browser",
+    "pasteNotSupported": "Unable to paste, context isn't secured",
     "shutdownSuccess": "qBittorrent was shutdown successfully!",
-    "shutdownError": "Unable to shutdown app. Make sure qBittorrent is running!"
+    "shutdownError": "Unable to shutdown app. Make sure qBittorrent is running!",
+    "invalidJson": "Invalid JSON!"
   },
   "rightClick": {
     "resume": "resume",
@@ -506,8 +532,9 @@
       "decrease": "Decrease"
     },
     "category": "Set Category",
+    "nocategory": "No Category",
     "tags": "Set Tags",
-    "notags": "No Tags",
+    "notags": "No Tag",
     "limit": "Set Limit",
     "copy": "Copy",
     "export": "Export Torrent | Export Torrents",

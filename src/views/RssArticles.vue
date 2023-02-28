@@ -25,9 +25,13 @@
         :custom-filter="customFilter"
         :sort-by.sync="sortBy"
         :sort-desc.sync="reverse"
+        :item-class="getRowStyle"
       >
         <template #top>
-          <v-text-field ref="filterRef" v-model="filter" label="Filter" class="mx-4" />
+          <div class="mx-4">
+            <v-text-field v-model="filter" :label="$t('filter')" />
+            <v-checkbox v-model="filterUnread" :label="$t('modals.rss.filterRead')" hide-details />
+          </div>
         </template>
         <template #[`item.title`]="{ item }">
           <a :href="item.link" target="_blank" v-text="item.title" />
@@ -36,9 +40,10 @@
           {{ item.parsedDate.toLocaleString() }}
         </template>
         <template #[`item.actions`]="{ item }">
-          <v-icon @click="downloadTorrent(item)">
-            {{ mdiDownload }}
-          </v-icon>
+          <span class="rss-actions">
+            <v-icon @click="markAsRead(item)">{{ mdiEmailOpen }}</v-icon>
+            <v-icon @click="downloadTorrent(item)">{{ mdiDownload }}</v-icon>
+          </span>
         </template>
       </v-data-table>
     </v-row>
@@ -51,7 +56,8 @@ import { mapState } from 'vuex'
 import { defineComponent } from 'vue'
 import { FeedArticle } from '@/types/vuetorrent/rss'
 import { Feed, FeedRule } from '@/types/vuetorrent'
-import { mdiClose, mdiDownload } from '@mdi/js'
+import { mdiClose, mdiDownload, mdiEmailOpen } from '@mdi/js'
+import qbit from "@/services/qbit";
 
 type RssState = { feeds: Feed[]; rules: FeedRule[] }
 
@@ -73,8 +79,10 @@ export default defineComponent({
         { text: this.$t('modals.rss.columnTitle.actions'), value: 'actions', sortable: false }
       ],
       filter: '',
-      sortBy: 'date',
+      filterUnread: false,
+      sortBy: 'parsedDate',
       reverse: true,
+      mdiEmailOpen,
       mdiDownload,
       mdiClose
     }
@@ -95,7 +103,7 @@ export default defineComponent({
       ;(this.rss as RssState).feeds.forEach((feed: Feed) => {
         feed.articles && articles.push(...feed.articles.map(article => ({ feedName: feed.name, parsedDate: new Date(article.date), ...article })))
       })
-      return articles
+      return articles.filter(article => (this.filterUnread ? !article.isRead : true))
     }
   },
   methods: {
@@ -103,10 +111,18 @@ export default defineComponent({
       this.$router.back()
     },
     customFilter(value: string, query: string, item?: any): boolean {
-      return (item as FeedArticle).title.toLowerCase().indexOf(query.toLowerCase()) !== -1
+      const article = item as FeedArticle
+      return article.title.toLowerCase().indexOf(query.toLowerCase()) !== -1
+    },
+    getRowStyle(item: FeedArticle) {
+      return item.isRead ? 'rss-read' : 'rss-unread'
     },
     downloadTorrent(item: FeedArticle) {
       this.createModal('AddModal', { initialMagnet: item.torrentURL })
+    },
+    async markAsRead(item: FeedArticle) {
+      await qbit.markAsRead(item.feedName, item.id)
+      this.$store.commit('FETCH_FEEDS')
     },
     handleKeyboardShortcut(e: KeyboardEvent) {
       if (e.key === 'Escape') {
@@ -120,5 +136,18 @@ export default defineComponent({
 <style scoped>
 .v-data-table {
   width: 100%;
+}
+.rss-actions {
+  display: flex;
+  flex-direction: row;
+}
+</style>
+
+<style>
+.rss-unread {
+  color: #ccc;
+}
+.rss-read {
+  color: grey;
 }
 </style>

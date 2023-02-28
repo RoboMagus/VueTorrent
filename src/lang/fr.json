@@ -26,6 +26,7 @@
   "errored": "Erreur",
   "login": "Se Connecter",
   "logout": "Se Déconnecter",
+  "shutdownApp": "Eteindre l'Appli",
   "download": "Téléchargement",
   "downloaded": "Téléchargé",
   "upload": "Téléversement",
@@ -43,6 +44,10 @@
   "feed": "Flux",
   "rule": "Règles",
   "then": "Alors",
+  "yes": "oui",
+  "no": "non",
+  "filter": "Filtre",
+  "close": "Fermer",
   "dashboard": {
     "tooltips": {
       "toggleSearch": "Rechercher un torrent",
@@ -136,6 +141,7 @@
     },
     "rss": {
       "title": "Articles RSS",
+      "filterUnread": "Articles non-lu uniquement",
       "columnTitle": {
         "feedName": "Nom du Flux",
         "author": "Auteur",
@@ -180,7 +186,10 @@
           "dateFormat": "Format de date",
           "openSideBarOnStart": "Ouvrir la barre latérale au lancement",
           "currentVersion": "Version actuelle:",
-          "qbittorrentVersion": "Version de QBittorrent:"
+          "qbittorrentVersion": "Version de QBittorrent:",
+          "importSettings": "Importer la configuration",
+          "exportSettings": "Exporter la configuration",
+          "resetSettings": "Réinitialiser la configuration"
         },
         "pageDashboard": {
           "busyTorrentTip": "Propriétés à afficher pour les torrents occupés",
@@ -214,8 +223,10 @@
       "pageDownloads": {
         "subHeaderWhenAddTorrent": "Lors de l'ajout d'un torrent",
         "whenAddTorrent": {
-          "createSubFolder": "Créer un sous-dossier pour les torrents avec plusieurs fichiers",
-          "donotAutoStart": "Ne pas lancer le téléchargement automatiquement"
+          "contentLayout": "Disposition du contenu du torrent",
+          "donotAutoStart": "Ne pas lancer le téléchargement automatiquement",
+          "stopCondition": "Condition d'arrêt du torrent",
+          "autoDeleteMode": "Supprimer les fichers .torrent après"
         },
         "subHeaderPublicSettings": "Paramètres publics",
         "publicSettings": {
@@ -410,10 +421,21 @@
       "downloadDirectory": "Répertoire de téléchargement",
       "starttorrent": "Lancer le torrent",
       "skipHashCheck": "Passer la vérification du hash",
-      "createSubfolder": "Créer un sous-dossier",
       "automaticTorrentManagement": "Gestion automatique des torrents",
       "dropHereForAdd": "Déposez ici pour ajouter",
-      "oneOrMoreFilesInvalidTorrent": "Un ou plusieurs fichiers ne sont pas des torrents valides"
+      "oneOrMoreFilesInvalidTorrent": "Un ou plusieurs fichiers ne sont pas des torrents valides",
+      "contentLayout": "Disposition des fichiers",
+      "contentLayoutOptions": {
+        "original": "Original",
+        "subfolder": "Créer un sous-dossier",
+        "nosubfolder": "Supprimer le sous-dossier"
+      },
+      "stopCondition": "Condition d'arrêt",
+      "stopConditionOptions": {
+        "none": "Aucune",
+        "metadataReceived": "Metadonnées reçues",
+        "filesChecked": "Fichiers vérifiés"
+      }
     },
     "changeLocation": {
       "title": "Changement d'emplacement"
@@ -455,6 +477,10 @@
     },
     "delete": {
       "check": "Supprimer également les fichiers du disque"
+    },
+    "shutdown": {
+      "title": "Eteindre qBittorrent",
+      "content": "Voulez-vous vraiment éteindre qBittorrent ?"
     }
   },
   "toast": {
@@ -467,9 +493,10 @@
     "renameFileFailed": "Impossible de renommer le fichier",
     "renameFolderFailed": "Impossible de renommer le dossier",
     "copySuccess": "Texte copié!",
-    "copyNotSupported": "Impossible de copier, Clipboard API indisponible dans ce navigateur",
+    "copyNotSupported": "Impossible de copier, le contexte n'est pas sécurisé",
     "pasteSuccess": "Texte collé!",
-    "pasteNotSupported": "Impossible de coller, Clipboard API indisponible dans ce navigateur"
+    "invalidJson": "JSON invalide!",
+    "pasteNotSupported": "Impossible de coller, le contexte n'est pas sécurisé"
   },
   "rightClick": {
     "resume": "Reprendre",
@@ -492,6 +519,7 @@
       "decrease": "Diminuer"
     },
     "category": "Définir la catégorie",
+    "nocategory": "Aucune catégorie",
     "tags": "Définir les tags",
     "notags": "Aucun tag",
     "limit": "Définir la limite",
